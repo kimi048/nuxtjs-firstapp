@@ -4,22 +4,20 @@
       <h1>Get the latest tech news!</h1>
     </section>
 
-    <PostList/>
+    <PostList />
   </div>
 </template>
 
 <script>
-import PostList from '@/components/Posts/PostList';
+import PostList from '@/components/Posts/PostList'
 export default {
   components: {
-    
-    PostList
-},
+    PostList,
+  },
 }
 </script>
 
 <style scoped>
-
 .intro {
   height: 300px;
   position: relative;
