@@ -1,18 +1,29 @@
 <template>
   <div class="admin-post-page">
     <section class="new-post-form">
-      <AdminPostForm/>
+      <AdminPostForm @submit="onSubmitted" />
     </section>
   </div>
 </template>
 
 <script>
-import AdminPostForm from "@/components/Admin/AdminPostForm";
+import AdminPostForm from '@/components/Admin/AdminPostForm'
 export default {
-  layout:'admin',
-  components:{
-    AdminPostForm
-  }
+  layout: 'admin',
+  components: {
+    AdminPostForm,
+  },
+  methods: {
+    onSubmitted(postData) {
+      this.$axios
+        .$post(
+          'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts.json',
+          postData
+        )
+        .then((result) => console.log(result))
+        .catch((e) => console.log(e))
+    },
+  },
 }
 </script>
 <style scoped>
