@@ -13,26 +13,10 @@ export default {
   components: {
     PostList,
   },
-  asyncData(context,callback) {
-    console.log(context)
-    // setTimeout(() => {
-      callback(null,{
-        loadedPosts : [
-        {
-          id: '1',
-          title: 'First Post',
-          previewText: 'This is our first Post!',
-          thumbnail: '/web.jpg',
-        },
-        {
-          id: '2',
-          title: 'Second Post',
-          previewText: 'This is our second Post!',
-          thumbnail: '/web.jpg',
-        },
-      ]
-      },1500);
-    // }, 1500);
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
+    }
   },
   // data() {
   //   return {
