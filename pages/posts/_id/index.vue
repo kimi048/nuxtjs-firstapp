@@ -21,19 +21,17 @@
 
 <script>
 export default {
-  asyncData(context, callback) {
-    callback(null, {
-      loadedPost: {
-        id: '1',
-        title: "First Post(ID:"+ context.route.params.id +")",
-        previewText: 'This is our first Post!',
-        author: 'Kimihito Tanaka',
-        updatedDate: new Date(),
-        content: 'some dummy text which is defenitely not the preview text',
-        thumbnail: '/web.jpg',
-      },
-    })
-  },
+  asyncData(context) {
+    return context.$axios.$get("https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts/"+context.params.id+".json")
+      .then(res=>{
+        console.log("data");
+        console.log(res)
+        return {
+          loadedPost:res
+        }
+      })
+      .catch(e=>context.error(e))
+  }
 }
 </script>
 

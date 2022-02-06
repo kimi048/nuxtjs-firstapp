@@ -1,28 +1,49 @@
 <template>
   <div class="admin-post-page">
     <section class="update-form">
-      <AdminPostForm :post="loadedPost"/>
+      <AdminPostForm :post="loadedPost" @submit="onSubmitted" />
     </section>
   </div>
 </template>
 
 <script>
-import AdminPostForm from "@/components/Admin/AdminPostForm"
+import AdminPostForm from '@/components/Admin/AdminPostForm'
 export default {
-  layout:'admin',
-  components:{
-    AdminPostForm
+  layout: 'admin',
+  components: {
+    AdminPostForm,
   },
-  data(){
-    return{
-      loadedPost:{
-        author:'Kimihito',
-        title:'My awesome post hoge!',
-        content:'Super amaizing, thanks for that!',
-        thumbnailLink:'hoge'
-      }
-    }
-  }
+  asyncData(context) {
+    return context.$axios
+      .$get(
+        'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts/' +
+          context.params.postId +
+          '.json'
+      )
+      .then((res) => {
+        console.log(res)
+        return {
+          loadedPost: { ...res, id: context.params.postId },
+        }
+      })
+      .catch((e) => context.error(e))
+  },
+  methods: {
+    onSubmitted(editedPost) {
+      this.$axios
+        .$put(
+          'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts/' +
+            this.$route.params.postId +
+            '.json',
+          editedPost
+        )
+        .then((res) => {
+          console.log(res)
+          this.$router.push('/admin')
+        })
+        .catch((e) => console.log(e))
+    },
+  },
 }
 </script>
 
