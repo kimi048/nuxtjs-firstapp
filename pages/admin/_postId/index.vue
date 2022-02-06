@@ -30,18 +30,10 @@ export default {
   },
   methods: {
     onSubmitted(editedPost) {
-      this.$axios
-        .$put(
-          'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts/' +
-            this.$route.params.postId +
-            '.json',
-          editedPost
-        )
-        .then((res) => {
-          console.log(res)
-          this.$router.push('/admin')
+      this.$store.dispatch("editPost",editedPost)
+        .then(()=>{
+          this.$router.push("/admin");
         })
-        .catch((e) => console.log(e))
     },
   },
 }
