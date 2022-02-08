@@ -25,6 +25,9 @@ const createStore = () => {
         // console.log(state.token)
         // console.log("statetoken end")
       },
+      clearToken(state) {
+        state.token = null
+      },
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
@@ -44,14 +47,15 @@ const createStore = () => {
           })
           .catch((e) => context.error(e))
       },
-      addPost({commit,state}, post) {
+      addPost({ commit, state }, post) {
         const createdPost = {
           ...post,
           updatedDate: new Date(),
         }
         return this.$axios
           .$post(
-            'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts.jsonauth='+state.token,
+            'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts.jsonauth=' +
+              state.token,
             createdPost
           )
           .then((result) => {
@@ -61,12 +65,13 @@ const createStore = () => {
           })
           .catch((e) => console.log(e))
       },
-      editPost({ state,commit }, editedPost) {
+      editPost({ state, commit }, editedPost) {
         return this.$axios
           .$put(
             'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts/' +
               editedPost.id +
-              '.json?auth='+state.token,
+              '.json?auth=' +
+              state.token,
             editedPost
           )
           .then((res) => {
@@ -78,7 +83,7 @@ const createStore = () => {
       setPosts(vuexContext, posts) {
         vuexContext.commit('setPosts', posts)
       },
-      authenticateUser({ commit }, authData) {
+      authenticateUser({ commit, dispatch }, authData) {
         let authUrl =
           'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
           process.env.fbAPIKey
@@ -96,14 +101,23 @@ const createStore = () => {
           .then((result) => {
             console.log(result)
             commit('setToken', result.idToken)
+            dispatch('setLogoutTimer', result.expiresIn * 1000)
             console.log(result.idToken)
           })
           .catch((e) => console.log(e))
+      },
+      setLogoutTimer({ commit }, duration) {
+        setTimeout(() => {
+          commit('clearToken')
+        }, duration)
       },
     },
     getters: {
       loadedPosts(state) {
         return state.loadedPosts
+      },
+      isAuthenticated(state) {
+        return state.token != null
       },
     },
   })
