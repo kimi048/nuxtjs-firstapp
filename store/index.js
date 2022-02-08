@@ -21,9 +21,9 @@ const createStore = () => {
       },
       setToken(state, token) {
         state.token = token
-        console.log("statetoken")
-        console.log(state.token)
-        console.log("statetoken end")
+        // console.log("statetoken")
+        // console.log(state.token)
+        // console.log("statetoken end")
       },
     },
     actions: {
@@ -44,29 +44,29 @@ const createStore = () => {
           })
           .catch((e) => context.error(e))
       },
-      addPost(vuexContext, post) {
+      addPost({commit,state}, post) {
         const createdPost = {
           ...post,
           updatedDate: new Date(),
         }
         return this.$axios
           .$post(
-            'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts.json',
+            'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts.jsonauth='+state.token,
             createdPost
           )
           .then((result) => {
             console.log('result:')
             console.log(result)
-            vuexContext.commit('addPost', { ...createdPost, id: result.name })
+            commit('addPost', { ...createdPost, id: result.name })
           })
           .catch((e) => console.log(e))
       },
-      editPost({ commit }, editedPost) {
+      editPost({ state,commit }, editedPost) {
         return this.$axios
           .$put(
             'https://nuxt-first-kimi-default-rtdb.firebaseio.com/posts/' +
               editedPost.id +
-              '.json',
+              '.json?auth='+state.token,
             editedPost
           )
           .then((res) => {
