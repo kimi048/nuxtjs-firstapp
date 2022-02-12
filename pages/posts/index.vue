@@ -1,38 +1,21 @@
 <template>
   <div class="posts-page">
-    <PostList :posts="loadedPosts"/>
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
 <script>
-import PostList from "@/components/Posts/PostList";
-export default{
-  components:{
-    PostList
-  }, 
-  data(){
-    return{
-      loadedPosts:[]
-    }
+import PostList from '@/components/Posts/PostList'
+export default {
+  components: {
+    PostList,
   },
-  created() {
-    setTimeout(() => {
-      this.loadedPosts = [
-        {
-          id: '1',
-          title: 'First Post',
-          previewText: 'This is our first Post!',
-          thumbnail: '/web.jpg',
-        },
-        {
-          id: '2',
-          title: 'Second Post',
-          previewText: 'This is our second Post!',
-          thumbnail: '/web.jpg',
-        },
-      ]
-    }, 1500)
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
+    },
   },
+  
 }
 </script>
 
@@ -42,6 +25,4 @@ export default{
   justify-content: center;
   align-items: center;
 }
-
-
 </style>

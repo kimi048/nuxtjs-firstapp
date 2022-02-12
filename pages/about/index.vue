@@ -1,10 +1,10 @@
 <template>
   <div class="about-page">
     <h1>thsi is my fantatic about page!!</h1>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 1 </p>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 2 </p>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 3 </p>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 4 </p>
   </div>
 </template>
 
